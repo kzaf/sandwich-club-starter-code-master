@@ -35,12 +35,7 @@ public class JsonUtils {
             if(jsonArrayWithAlsoKnownAsValues != null){
                 for(int i=0; i < jsonArrayWithAlsoKnownAsValues.length(); i++){
                     String akaValue = jsonArrayWithAlsoKnownAsValues.getString(i);
-                    try{
-                        alsoKnownAs.add(akaValue);
-                    }catch (Exception e){
-                        Log.d(TAG, "parseSandwichJson: " + e.toString() );
-                    }
-
+                    alsoKnownAs.add(akaValue);
                 }
             }
 

@@ -1,5 +1,6 @@
 package com.udacity.sandwichclub;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -66,19 +67,39 @@ public class DetailActivity extends AppCompatActivity {
         Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
     }
 
+    @SuppressLint("SetTextI18n")
     private void populateUI(Sandwich sandwich) {
 
-        mOriginTextView.append(sandwich.getPlaceOfOrigin());
-        mDescriptionTextView.append(sandwich.getDescription());
+        if(sandwich.getPlaceOfOrigin() != null && !sandwich.getPlaceOfOrigin().equals("")){
+            mOriginTextView.setText(sandwich.getPlaceOfOrigin() + "\n");
+        }else{
+            mOriginTextView.setText("N/A" + "\n");
+        }
 
-        for (String aka : sandwich.getAlsoKnownAs()){
-            mAlsoKownAsTextView.append(aka);
+        if(sandwich.getDescription() != null && !sandwich.getDescription().equals("")){
+            mDescriptionTextView.setText(sandwich.getDescription() + "\n");
+        }else{
+            mDescriptionTextView.setText("N/A" + "\n");
 
         }
 
-        for (String ingredients : sandwich.getIngredients()){
-            mIngredientsTextView.append(ingredients);
+        if(!sandwich.getAlsoKnownAs().isEmpty()){
+            for (String aka : sandwich.getAlsoKnownAs()){
+                mAlsoKownAsTextView.append(aka + "\n");
+            }
+        }else{
+            mAlsoKownAsTextView.append("N/A" + "\n");
         }
+
+
+        if(!sandwich.getIngredients().isEmpty()){
+            for (String ingredients : sandwich.getIngredients()){
+                mIngredientsTextView.append(ingredients + "\n");
+            }
+        }else{
+            mIngredientsTextView.append("N/A" + "\n");
+        }
+
 
     }
 }
