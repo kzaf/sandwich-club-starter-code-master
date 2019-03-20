@@ -12,25 +12,32 @@ import java.util.List;
 
 public class JsonUtils {
 
+    public static final String INGREDIENTS = "ingredients";
+    public static final String NAME = "name";
+    public static final String MAIN_NAME = "mainName";
+    public static final String PLACE_OF_ORIGIN = "placeOfOrigin";
+    public static final String DESCRIPTION = "description";
+    public static final String IMAGE = "image";
+
     public static Sandwich parseSandwichJson(String json) {
 
         try {
             JSONObject sandwichJson = new JSONObject(json);
 
-            JSONObject mName = sandwichJson.getJSONObject("name");
-            JSONArray mIngredients = sandwichJson.getJSONArray("ingredients");
+            JSONObject mName = sandwichJson.optJSONObject(NAME);
+            JSONArray mIngredients = sandwichJson.optJSONArray(INGREDIENTS);
 
-            String mainName = mName.getString("mainName");
-            String placeOfOrigin = sandwichJson.getString("placeOfOrigin");
-            String description = sandwichJson.getString("description");
-            String image = sandwichJson.getString("image");
+            String mainName = mName.optString(MAIN_NAME);
+            String placeOfOrigin = sandwichJson.optString(PLACE_OF_ORIGIN);
+            String description = sandwichJson.optString(DESCRIPTION);
+            String image = sandwichJson.optString(IMAGE);
 
             List<String> alsoKnownAs = new ArrayList<>();
-            JSONArray jsonArrayWithAlsoKnownAsValues = mName.getJSONArray("alsoKnownAs");
+            JSONArray jsonArrayWithAlsoKnownAsValues = mName.optJSONArray("alsoKnownAs");
 
             if(jsonArrayWithAlsoKnownAsValues != null){
                 for(int i=0; i < jsonArrayWithAlsoKnownAsValues.length(); i++){
-                    String akaValue = jsonArrayWithAlsoKnownAsValues.getString(i);
+                    String akaValue = jsonArrayWithAlsoKnownAsValues.optString(i);
                     alsoKnownAs.add(akaValue);
                 }
             }
@@ -39,7 +46,7 @@ public class JsonUtils {
 
             if(mIngredients != null){
                 for(int i=0; i < mIngredients.length(); i++){
-                    String akaValue = mIngredients.getString(i);
+                    String akaValue = mIngredients.optString(i);
                     ingredients.add(akaValue);
                 }
             }
